@@ -431,7 +431,8 @@ updateState = function(state, statusMsg) {
         
         connTimer = setTimeout(function () {
                 fail("Connect timeout");
-            }, conf.connectTimeout * 1000);
+            }, 10 * 1000);
+            //}, conf.connectTimeout * 1000);
 
         init_vars();
         connect();

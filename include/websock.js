@@ -261,7 +261,20 @@ function open(uri) {
     if (test_mode) {
         websocket = {};
     } else {
-        websocket = new WebSocket(uri, 'base64');
+
+        var cookies = document.cookie.split(';')
+        var user = '';
+        var auth = '';
+        for(var i=0; i<cookies.length; i++) {
+          if(cookies[i].match('user_credentials')) {
+              auth = cookies[i].split('=')[1];
+          } else if(cookies[i].match('user')) {
+              user = cookies[i].split('=')[1];
+          }
+        }
+
+
+        websocket = new WebSocket(uri, ['base64', user + '-----' + auth])
         // TODO: future native binary support
         //websocket = new WebSocket(uri, ['binary', 'base64']);
     }
